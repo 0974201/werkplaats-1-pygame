@@ -1,3 +1,2 @@
 print("Hello world!")
-
-print("enemy")
+print("Please enter your password")
