@@ -1,1 +1,1 @@
-print("Hello world!")
+print("hier moet de start scherm komen ofz")
