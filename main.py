@@ -1,2 +1,5 @@
 print("Hello world!")
-print("Please enter your password")
+
+print("enemy")
+
+print("wowowowowowowowowowowwowowoowowowwowowowowoowowowowowowowwo")
