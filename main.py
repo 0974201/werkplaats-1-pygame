@@ -60,7 +60,3 @@ while running:
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
-
-    player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
-    player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
-    pygame.display.update() #oh joh. okay. ik had dit dus nodig. dit updatetedtdtft het hele scherm met alles wat er tot nu toe is toegevoegd. (als ik het goed begrijp)
