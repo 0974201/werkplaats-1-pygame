@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pygame
 from pygame.locals import *
 import math
@@ -81,3 +82,6 @@ while running:
 =======
 print("hier moet de start scherm komen ofz")
 >>>>>>> 4cfcb99 (test 123)
+=======
+print("Alien Sterijders")
+>>>>>>> 7485f5a (naam veranderd)
