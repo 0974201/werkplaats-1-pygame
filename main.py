@@ -1,1 +1,1 @@
-print("hier moet de start scherm komen ofz")
+print("Alien Sterijders")
