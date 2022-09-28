@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 import pygame
 from pygame.locals import *
 import math
@@ -16,6 +14,11 @@ BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 #BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
+from turtle import width
+import pygame
+from pygame import mixer
+import random
+import math
 
 # initialize pygame
 pygame.init()
@@ -79,9 +82,19 @@ while running:
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
     pygame.display.update()
-=======
-print("hier moet de start scherm komen ofz")
->>>>>>> 4cfcb99 (test 123)
-=======
-print("Alien Sterijders")
->>>>>>> 7485f5a (naam veranderd)
+width = 800
+height = 600
+screen = pygame.display.set_mode((width, height))
+background_color = (0, 0, 0)
+
+running = True
+
+while running:
+
+    # Background color
+    screen.fill(background_color)
+
+    # Quit game
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
