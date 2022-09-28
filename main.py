@@ -1,7 +1,26 @@
-from os import SCHED_OTHER
-from tkinter import scrolledtext
-from turtle import screensize
-from typing import overload
+from turtle import width
+import pygame
+from pygame import mixer
+import random
+import math
 
+# initialize pygame
+pygame.init()
 
-print("Hello world!")
+# set up the drawing window
+width = 800
+height = 600
+screen = pygame.display.set_mode((width, height))
+background_color = (0, 0, 0)
+
+running = True
+
+while running:
+
+    # Background color
+    screen.fill(background_color)
+
+    # Quit game
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
