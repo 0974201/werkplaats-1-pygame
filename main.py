@@ -11,7 +11,7 @@ pygame.init()
 width = 800
 height = 600
 screen = pygame.display.set_mode((width, height))
-background_color = (0, 0, 0)
+background_color = (25, 25, 25) #als je dit ziet, zit je niet in de goede branch yo
 
 running = True
 
