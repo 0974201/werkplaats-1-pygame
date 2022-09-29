@@ -14,6 +14,7 @@ BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 # initialize pygame
 pygame.init()
 
+
 # set up the drawing window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Warriors")
@@ -23,6 +24,26 @@ player = Player() #hier roepen wij player aan.
 player.rect.y = 300 #wordt op 300px gespawned
 player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
+
+
+
+
+
+
+# Bunyamin/ eerste enemys:
+
+# Enemy (coordinaten kloppen nog niet)
+enemyImg = pygame.image.load('alienvijand.png)')
+enemyX = 370
+enemyY = 50
+enemyX_change = 0 
+
+def enemy(x, y):
+    screen.blit(enemyImg, (x, y()))
+
+
+
+
 
 running = True
 
