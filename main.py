@@ -32,11 +32,12 @@ player_list.add(player) #en is nu toegevoegd.
 
 # Bunyamin/ eerste enemys:
 
-# Enemy (coordinaten kloppen nog niet)
-enemyImg = pygame.image.load('alienvijand.png)')
-enemyX = 370
-enemyY = 50
-enemyX_change = 0 
+# Enemy (coordinaten nog aanpassen naar side shooter)
+enemyImg = pygame.image.load('images/alienvijand.png)')
+enemyX = random.randint (0, 800)
+enemyY = random.randint (50, 150)
+enemyX_change = 0.3 
+enemyY_change = 0.3
 
 def enemy(x, y):
     screen.blit(enemyImg, (x, y()))
@@ -44,9 +45,8 @@ def enemy(x, y):
 
 
 
-
+#game loop
 running = True
-
 while running:
     
     screen.blit(BACKGROUND_IMG, (0,0)) #nieuwe achtergrond toegevoegd
@@ -56,6 +56,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+<<<<<<< HEAD
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 player.moveY(-1)
@@ -81,3 +82,20 @@ while running:
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
+=======
+    
+
+
+   # Enemy movement/bewegingen (coordinaten nog aanpassen)
+    enemyX += enemyX_change
+
+    if enemyX <=0:
+        enemyX_change = 0.6
+        enemyY += enemyY_change
+    elif enemyX >=735:
+        enemyX_change = -0.6 
+
+
+
+pygame.display.update()
+>>>>>>> 2de661b (enemy movement is toegevoegd)
