@@ -26,36 +26,50 @@ player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
 
 
-
-
-
-
 # Bunyamin/ eerste enemys:
 
 # Enemy (coordinaten nog aanpassen naar side shooter)
-enemyImg = pygame.image.load('images/alienvijand.png)')
-enemyX = random.randint (0, 800)
-enemyY = random.randint (50, 150)
-enemyX_change = 0.3 
-enemyY_change = 0.3
+enemyImg = []
+enemyX = []
+enemyY = []
+enemyX_change = []
+enemyY_change = []
+num_of_enemy = 10
 
-def enemy(x, y):
-    screen.blit(enemyImg, (x, y()))
+for i in range(num_of_enemy):
+enemyImg.append(pygame.image.load('images/alienvijand.png)'))
+enemyX.append(random.randint(0, 800))
+enemyY.append(random.randint(50, 150))
+enemyX_change.append(4)
+enemyY_change.append(40)
 
 
+def enemy(x, y, i):
+    screen.blit(enemyImg[i], (x, y))
 
 
-#game loop
+# game loop
 running = True
 while running:
+<<<<<<< HEAD
     
     screen.blit(BACKGROUND_IMG, (0,0)) #nieuwe achtergrond toegevoegd
     
+=======
+
+    # Background color
+    screen.fill(background_color)
+
+    # hierboven moet de while loop komen
+    enemy(enemyX, enemyY)
+
+>>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     # Quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
@@ -87,15 +101,25 @@ while running:
 
 
    # Enemy movement/bewegingen (coordinaten nog aanpassen)
+=======
+    # Enemy movement/bewegingen (coordinaten nog aanpassen) de colission
+    moet hieronder komen!!!
+    for i in range(num_of_enemy):
+>>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     enemyX += enemyX_change
+    if enemyX[i] <= 0:
+        enemyX_change[i] = 4
+        enemyY[i] += enemyY_change[i]
+    elif enemyX[i] >= 735:
+        enemyX_change[i] = -4
+        enemyY[i] += enemyY_change[i]
 
-    if enemyX <=0:
-        enemyX_change = 0.6
-        enemyY += enemyY_change
-    elif enemyX >=735:
-        enemyX_change = -0.6 
 
-
+<<<<<<< HEAD
 
 pygame.display.update()
 >>>>>>> 2de661b (enemy movement is toegevoegd)
+=======
+enemy(enemyX[i], enemyY[i])
+pygame.display.update()
+>>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
