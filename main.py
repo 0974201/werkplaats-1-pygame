@@ -19,6 +19,7 @@ import pygame
 from pygame import mixer
 import random
 import math
+import button
 
 # initialize pygame
 pygame.init()
@@ -94,34 +95,18 @@ exit_img = pygame.image.load("assets/images/exit.png")
 #Title
 pygame.display.set_caption("Space Warriors")
 
-class Button():
-    def __init__(self, x, y, image, scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
-        
-    def draw(self):
-        action = False
-        
-        # Mouse position
-        mouse_pos = pygame.mouse.get_pos()
-        
-        # Check if mouse is over the button
-        if self.rect.collidepoint(mouse_pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                action = True
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-        screen.blit(self.image, (self.rect.x, self.rect.y))
-        return action
-
 # Create buttons
-start_button = Button(100, 200, start_img, 0.5)
-exit_button = Button(450, 200, exit_img, 0.5)
+start_button = button.Button(100, 200, start_img, 0.5)
+exit_button = button.Button(450, 200, exit_img, 0.5)
+
+# Temp text
+font = pygame.font.SysFont("comicsans", 50)
+textX = 250
+textY = 250
+
+def show_text(x, y):
+    text = font.render("Game running", True, (255, 255, 255))
+    screen.blit(text, (x, y))
 
 start = True
 
@@ -130,10 +115,11 @@ while start:
     # Background color
     screen.fill(background_color)
     
-    if start_button.draw():
-        print("Start")
-    if exit_button.draw():
-        print("Exit")
+    if start_button.draw(screen):
+        running = True
+        start = False
+    if exit_button.draw(screen):
+        start = False
         
     # Quit game
     for event in pygame.event.get():
@@ -146,11 +132,15 @@ while start:
 while running:
 
     # Background color
-    screen.fill((255, 255, 255))
+    screen.fill((255, 150, 50))
+    
+    show_text(textX, textY)
 
     # Quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            
+    pygame.display.update()
             
 pygame.quit()
