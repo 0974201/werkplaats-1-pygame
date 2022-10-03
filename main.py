@@ -18,11 +18,25 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect() #haalt op wat er in bovenstaande regels is aangemaakt
 
+        self.changeX = 0
+        self.changeY = 0
+
     def move(self, x, y):
-        return "todo"
+        self.changeX += x
+        self.changeY += y
+        #return "todo"
 
     def update(self):
-        return "todo"
+        self.rect.x += self.changeX
+        self.rect.y += self.changeY
+        
+        if self.rect.x < 0:
+            self.rect.x = 0
+
+        if self.rect.x > SCREEN_WIDTH - self.rect.width:
+            self.rect.x = SCREEN_WIDTH - self.rect.width
+
+        #return "todo"
 
 # initialize pygame
 pygame.init()
@@ -32,7 +46,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Warriors")
 
 #gaem objects
-player = Player(PLAYER_COLOUR, 55, 55) #hier roepen wij player aan.
+player = Player(PLAYER_COLOUR, 50, 50) #hier roepen wij player aan.
 player.rect.y = 250 #wordt op 250px gespawned
 player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
@@ -52,8 +66,10 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
+                player.move(50,-50)
                 print("up")
             if event.key == pygame.K_DOWN:
+                player.move(-50,50)
                 print("down")
 
         if event.type == pygame.KEYUP:
@@ -63,4 +79,4 @@ while running:
                 print("down released")
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
-    pygame.display.flip() #oh joh. okay. ik had dit dus nodig. dit updatetedtdtft het hele scherm met alles wat er tot nu toe is toegevoegd. (als ik het goed begrijp)
+    pygame.display.update() #oh joh. okay. ik had dit dus nodig. dit updatetedtdtft het hele scherm met alles wat er tot nu toe is toegevoegd. (als ik het goed begrijp)
