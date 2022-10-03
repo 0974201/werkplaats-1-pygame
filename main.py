@@ -37,11 +37,11 @@ enemyY_change = []
 num_of_enemy = 10
 
 for i in range(num_of_enemy):
-enemyImg.append(pygame.image.load('images/alienvijand.png)'))
-enemyX.append(random.randint(0, 800))
-enemyY.append(random.randint(50, 150))
-enemyX_change.append(4)
-enemyY_change.append(40)
+    enemyImg.append(pygame.image.load('assets/images/alienvijand.png'))
+    enemyX.append(random.randint(0, 735))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(0.5)
+    enemyY_change.append(20)
 
 
 def enemy(x, y, i):
@@ -61,7 +61,7 @@ while running:
     screen.fill(background_color)
 
     # hierboven moet de while loop komen
-    enemy(enemyX, enemyY)
+    enemy(enemyX[i], enemyY[i], i)
 
 >>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     # Quit game
@@ -103,8 +103,9 @@ while running:
    # Enemy movement/bewegingen (coordinaten nog aanpassen)
 =======
     # Enemy movement/bewegingen (coordinaten nog aanpassen) de colission
-    moet hieronder komen!!!
+    #moet hieronder komen!
     for i in range(num_of_enemy):
+<<<<<<< HEAD
 >>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     enemyX += enemyX_change
     if enemyX[i] <= 0:
@@ -123,3 +124,16 @@ pygame.display.update()
 enemy(enemyX[i], enemyY[i])
 pygame.display.update()
 >>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
+=======
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 0.5
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 735:
+            enemyX_change[i] = -0.5
+            enemyY[i] += enemyY_change[i]
+
+
+        enemy(enemyX[i], enemyY[i], i)
+    pygame.display.update()
+>>>>>>> 80bc6a0 (debugs van enemies, is nu klaar)
