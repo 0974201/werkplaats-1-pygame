@@ -41,18 +41,12 @@ while running:
             if event.key == pygame.K_DOWN:
                 playerX_change = 5
             if event.key == pygame.K_SPACE:
-                #if bullet_state is "ready":
-                    print("pew")
-                    # Get the current x cordinate of the spaceship
-                    #bulletX = playerX
-                    #fire_bullet(bulletX, bulletY)
+                print("pew")
+
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 playerX_change = 0
-
-    # 5 = 5 + -0.1 -> 5 = 5 - 0.1
-    # 5 = 5 + 0.1
 
     playerX += playerX_change
     if playerX <= 0:
