@@ -22,18 +22,20 @@ class Player(pygame.sprite.Sprite):
         self.changeX = 0
         self.changeY = 0
 
-    def move(self, x, y):
-        self.changeX += x
-        self.changeY += y
+    def moveX(self, x):
+        self.changeX += x #update movement on x-axis
+
+    def moveY(self, y):
+        self.changeY += y #update movement on y-axis
 
     def update(self):
         self.rect.x += self.changeX #update positie op het scherm
         self.rect.y += self.changeY
         
-        if self.rect.y < 0:
+        if self.rect.y <= 0:
             self.rect.y = 0
 
-        if self.rect.x < 0:
+        if self.rect.x <= 0:
             self.rect.x = 0
 
         if self.rect.x > SCREEN_WIDTH - self.rect.width:
@@ -69,36 +71,30 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                player.move(0, -2)
+                player.moveY(-0.75)
                 print("up")
             if event.key == pygame.K_DOWN:
-                player.move(0, 2)
+                player.moveY(0.75)
                 print("down")
             if event.key == pygame.K_LEFT:
-                player.move(-2, 0)
+                player.moveX(-1)
                 print("left")
             if event.key == pygame.K_RIGHT:
-                player.move(2, 0)
+                player.moveX(1)
                 print("right")
             if event.key == pygame.K_SPACE:
                 print("pew")
 
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                player.move(0, 0)
-                print("up released")
-            if event.key == pygame.K_DOWN:
-                player.move(0, 0)
-                print("down released")
-            if event.key == pygame.K_LEFT:
-                player.move(0, 0)
-                print("left released")
-            if event.key == pygame.K_RIGHT:
-                player.move(0, 0)
-                print("right released")
+            if event.key == pygame.K_UP or event.key == pygame.K_DOWN: 
+                player.moveY(0)
+                print("key released")
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                player.moveX(0)
+                print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
-    pygame.display.flip() #oh joh. okay. ik had dit dus nodig. dit updatetedtdtft het hele scherm met alles wat er tot nu toe is toegevoegd. (als ik het goed begrijp)
+    pygame.display.update() #oh joh. okay. ik had dit dus nodig. dit updatetedtdtft het hele scherm met alles wat er tot nu toe is toegevoegd. (als ik het goed begrijp)
