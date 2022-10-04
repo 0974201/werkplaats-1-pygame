@@ -80,6 +80,8 @@ while running:
             if event.key == pygame.K_RIGHT:
                 player.move(2, 0)
                 print("right")
+            if event.key == pygame.K_SPACE:
+                print("pew")
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -94,6 +96,8 @@ while running:
             if event.key == pygame.K_RIGHT:
                 player.move(0, 0)
                 print("right released")
+            if event.key == pygame.K_SPACE:
+                print("spacebar released")
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
