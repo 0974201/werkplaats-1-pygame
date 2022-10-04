@@ -1,22 +1,25 @@
 import pygame
-from pygame import *
+from pygame.locals import *
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-PLAYER_COLOUR = (148, 24, 24)
-BACKGROUND_COLOUR = (31, 29, 29) 
+BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
+#PLAYER_COLOUR = (148, 24, 24)
+#BACKGROUND_COLOUR = (31, 29, 29) 
 #BACKGROUND_COLOUR = (0x1F1D1D)
+#https://helianthus-games.itch.io/pixel-art-space-shooter-kit
+#https://deep-fold.itch.io/space-background-generator
 
 #player class:
 class Player(pygame.sprite.Sprite):
     #uh ok, dus dit is constructor van de player.
     #zeg maar de blauwprint van de player als ie (in de game) wordt aangeroepen.
-    def __init__(self, colour, width, height):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
     
-        self.image = pygame.Surface([width, height]) #dit maakt dus de image (in dit geval een blok) voor de player object aan
-        self.image.fill(colour) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
+        self.image = pygame.image.load('assets/images/ship.png') #hier gaat img voor player object in
+        #self.image.fill(colour) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
         self.rect = self.image.get_rect() #haalt op wat er in bovenstaande regels is aangemaakt
         
         self.changeX = 0
@@ -52,7 +55,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Warriors")
 
 #gaem objects
-player = Player(PLAYER_COLOUR, 50, 50) #hier roepen wij player aan.
+player = Player() #hier roepen wij player aan.
 player.rect.y = 250 #wordt op 250px gespawned
 player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
@@ -61,8 +64,7 @@ running = True
 
 while running:
     
-    # Background color
-    screen.fill(BACKGROUND_COLOUR)
+    screen.blit(BACKGROUND_IMG, (0,0)) #nieuwe achtergrond toegevoegd
     
     # Quit game
     for event in pygame.event.get():
