@@ -12,11 +12,11 @@ BACKGROUND_COLOUR = (31, 29, 29)
 class Player(pygame.sprite.Sprite):
     #uh ok, dus dit is constructor van de player.
     #zeg maar de blauwprint van de player als ie (in de game) wordt aangeroepen.
-    def __init__(self, color, width, height):
+    def __init__(self, colour, width, height):
         pygame.sprite.Sprite.__init__(self)
     
         self.image = pygame.Surface([width, height]) #dit maakt dus de image (in dit geval een blok) voor de player object aan
-        self.image.fill(color) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
+        self.image.fill(colour) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
         self.rect = self.image.get_rect() #haalt op wat er in bovenstaande regels is aangemaakt
         
         self.changeX = 0
