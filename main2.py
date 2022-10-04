@@ -8,15 +8,15 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 # Background
-background = pygame.image.load('assets/images/ra_logo.png')
+background = pygame.image.load('assets/images/background.png')
 
 # Caption and Icon
 pygame.display.set_caption("Space Warriors")
 
 # Player
-playerImg = pygame.image.load('assets/images/ra_logo.png')
-playerX = 15
-playerY = 250
+playerImg = pygame.image.load('assets/images/ship.png')
+playerX = 10
+playerY = 300
 playerY_change = 0
 
 def player(x, y):
@@ -51,8 +51,8 @@ while running:
     playerY += playerY_change
     if playerY <= 0:
         playerY = 0
-    elif playerY >= 536:
-        playerY = 536
+    elif playerY >= 579:
+        playerY = 579
 
     player(playerX, playerY)
     pygame.display.update()
