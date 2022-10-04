@@ -51,8 +51,8 @@ while running:
     playerY += playerY_change
     if playerY <= 0:
         playerY = 0
-    elif playerY >= 736:
-        playerY = 736
+    elif playerY >= 536:
+        playerY = 536
 
     player(playerX, playerY)
     pygame.display.update()
