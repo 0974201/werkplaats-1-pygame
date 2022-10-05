@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from player import Player
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
@@ -9,42 +10,6 @@ BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 #BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
-
-#player class:
-class Player(pygame.sprite.Sprite):
-    #uh ok, dus dit is constructor van de player.
-    #zeg maar de blauwprint van de player als ie (in de game) wordt aangeroepen.
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-    
-        self.image = pygame.image.load('assets/images/ship.png') #hier gaat img voor player object in
-        #self.image.fill(colour) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
-        self.rect = self.image.get_rect() #haalt op wat er in bovenstaande regels is aangemaakt
-        
-        self.changeX = 0
-        self.changeY = 0
-
-    def moveX(self, x):
-        self.changeX += x #update movement on x-axis
-
-    def moveY(self, y):
-        self.changeY += y #update movement on y-axis
-
-    def update(self):
-        self.rect.x += self.changeX #update positie op het scherm
-        self.rect.y += self.changeY
-        
-        if self.rect.y <= 0:
-            self.rect.y = 0
-
-        if self.rect.x <= 0:
-            self.rect.x = 0
-
-        if self.rect.x > SCREEN_WIDTH - self.rect.width:
-            self.rect.x = SCREEN_WIDTH - self.rect.width
-
-        if self.rect.y > SCREEN_HEIGHT - self.rect.height:
-            self.rect.y = SCREEN_HEIGHT - self.rect.height #dit zorgt ervoor dat hij in het scherm blijft
 
 # initialize pygame
 pygame.init()
@@ -72,16 +37,16 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                player.moveY(-3)
+                player.moveY(-1)
                 print("up")
             if event.key == pygame.K_DOWN:
-                player.moveY(3)
+                player.moveY(1)
                 print("down")
             if event.key == pygame.K_LEFT:
-                player.moveX(-3)
+                player.moveX(-1)
                 print("left")
             if event.key == pygame.K_RIGHT:
-                player.moveX(3)
+                player.moveX(1)
                 print("right")
             if event.key == pygame.K_SPACE:
                 print("pew")
