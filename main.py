@@ -79,4 +79,6 @@ while running:
     # Enemy movement/bewegingen (coordinaten nog aanpassen) de colission
     #moet hieronder komen!
 
+    player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
+    player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
     pygame.display.update()
