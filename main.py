@@ -1,7 +1,10 @@
 import pygame
-<<<<<<< HEAD
 from pygame.locals import *
+import math
+import random
 from player import Player
+from enemy import Enemy
+from enemy import EnemyGroup
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
@@ -11,13 +14,6 @@ BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 #BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
-=======
-from pygame import mixer
-from enemy import Enemy
-from enemy import EnemyGroup
-import random
-import math
->>>>>>> e18ac07 (Added classes and file for enemies)
 
 # initialize pygame
 pygame.init()
@@ -44,27 +40,15 @@ enemyGroup = EnemyGroup(10)
 # game loop
 running = True
 while running:
-<<<<<<< HEAD
     
     screen.blit(BACKGROUND_IMG, (0,0)) #nieuwe achtergrond toegevoegd
-    
-=======
-
-    # Background color
-    screen.fill(background_color)
-
     # hierboven moet de while loop komen
     # enemy(enemyX[i], enemyY[i], i)
     enemyGroup.update(screen)
-
->>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     # Quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-<<<<<<< HEAD
-<<<<<<< HEAD
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 player.moveY(-1)
@@ -90,45 +74,9 @@ while running:
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
-=======
-    
-
 
    # Enemy movement/bewegingen (coordinaten nog aanpassen)
-=======
     # Enemy movement/bewegingen (coordinaten nog aanpassen) de colission
     #moet hieronder komen!
-<<<<<<< HEAD
-    for i in range(num_of_enemy):
-<<<<<<< HEAD
->>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
-    enemyX += enemyX_change
-    if enemyX[i] <= 0:
-        enemyX_change[i] = 4
-        enemyY[i] += enemyY_change[i]
-    elif enemyX[i] >= 735:
-        enemyX_change[i] = -4
-        enemyY[i] += enemyY_change[i]
-
-
-<<<<<<< HEAD
-
-pygame.display.update()
->>>>>>> 2de661b (enemy movement is toegevoegd)
-=======
-enemy(enemyX[i], enemyY[i])
-pygame.display.update()
->>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
-=======
-        enemyX[i] += enemyX_change[i]
-        if enemyX[i] <= 0:
-            enemyX_change[i] = 0.5
-            enemyY[i] += enemyY_change[i]
-        elif enemyX[i] >= 735:
-            enemyX_change[i] = -0.5
-            enemyY[i] += enemyY_change[i]
-=======
->>>>>>> e18ac07 (Added classes and file for enemies)
 
     pygame.display.update()
->>>>>>> 80bc6a0 (debugs van enemies, is nu klaar)
