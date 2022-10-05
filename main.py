@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import math
 import random
+import button
 from player import Player
 from enemy import Enemy
 from enemy import EnemyGroup
@@ -11,15 +12,9 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 #PLAYER_COLOUR = (148, 24, 24)
-#BACKGROUND_COLOUR = (31, 29, 29) 
+BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
-from turtle import width
-import pygame
-from pygame import mixer
-import random
-import math
-import button
 
 # initialize pygame
 pygame.init()
@@ -38,9 +33,45 @@ player_list.add(player) #en is nu toegevoegd.
 enemy = Enemy(0, 0, 0.5)
 enemyGroup = EnemyGroup(10)
 
+# Load button images
+start_img = pygame.image.load("assets/images/start.png")
+exit_img = pygame.image.load("assets/images/exit.png")
+
+# Create buttons
+start_button = button.Button(100, 200, start_img, 0.5)
+exit_button = button.Button(450, 200, exit_img, 0.5)
+
+# Temp text
+font = pygame.font.SysFont("comicsans", 50)
+textX = 250
+textY = 250
+
+def show_text(x, y):
+    text = font.render("Game running", True, (255, 255, 255))
+    screen.blit(text, (x, y))
+
+# start loop
+start = True
+
+while start:
+    
+    # Background color
+    screen.fill(BACKGROUND_COLOUR)
+    
+    if start_button.draw(screen):
+        running = True
+        start = False
+    if exit_button.draw(screen):
+        start = False
+        
+    # Quit game
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            start = False
+            
+    pygame.display.update()
 
 # game loop
-running = True
 while running:
     
     # achtergrond afbeelding
@@ -82,65 +113,6 @@ while running:
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
-    pygame.display.update()
-width = 800
-height = 600
-screen = pygame.display.set_mode((width, height))
-background_color = (0, 0, 0)
-
-# Load button images
-start_img = pygame.image.load("assets/images/start.png")
-exit_img = pygame.image.load("assets/images/exit.png")
-
-#Title
-pygame.display.set_caption("Space Warriors")
-
-# Create buttons
-start_button = button.Button(100, 200, start_img, 0.5)
-exit_button = button.Button(450, 200, exit_img, 0.5)
-
-# Temp text
-font = pygame.font.SysFont("comicsans", 50)
-textX = 250
-textY = 250
-
-def show_text(x, y):
-    text = font.render("Game running", True, (255, 255, 255))
-    screen.blit(text, (x, y))
-
-start = True
-
-while start:
-    
-    # Background color
-    screen.fill(background_color)
-    
-    if start_button.draw(screen):
-        running = True
-        start = False
-    if exit_button.draw(screen):
-        start = False
-        
-    # Quit game
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            start = False
-            
-    pygame.display.update()
-    
-
-while running:
-
-    # Background color
-    screen.fill((255, 150, 50))
-    
-    show_text(textX, textY)
-
-    # Quit game
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            
     pygame.display.update()
             
 pygame.quit()
