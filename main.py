@@ -1,4 +1,5 @@
 import pygame
+<<<<<<< HEAD
 from pygame.locals import *
 from player import Player
 
@@ -10,10 +11,16 @@ BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
 #BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
+=======
+from pygame import mixer
+from enemy import Enemy
+from enemy import EnemyGroup
+import random
+import math
+>>>>>>> e18ac07 (Added classes and file for enemies)
 
 # initialize pygame
 pygame.init()
-
 
 # set up the drawing window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -29,23 +36,9 @@ player_list.add(player) #en is nu toegevoegd.
 # Bunyamin/ eerste enemys:
 
 # Enemy (coordinaten nog aanpassen naar side shooter)
-enemyImg = []
-enemyX = []
-enemyY = []
-enemyX_change = []
-enemyY_change = []
-num_of_enemy = 10
-
-for i in range(num_of_enemy):
-    enemyImg.append(pygame.image.load('assets/images/alienvijand.png'))
-    enemyX.append(random.randint(0, 735))
-    enemyY.append(random.randint(50, 150))
-    enemyX_change.append(0.5)
-    enemyY_change.append(20)
-
-
-def enemy(x, y, i):
-    screen.blit(enemyImg[i], (x, y))
+    
+enemy = Enemy(0, 0, 0.5)
+enemyGroup = EnemyGroup(10)
 
 
 # game loop
@@ -61,7 +54,8 @@ while running:
     screen.fill(background_color)
 
     # hierboven moet de while loop komen
-    enemy(enemyX[i], enemyY[i], i)
+    # enemy(enemyX[i], enemyY[i], i)
+    enemyGroup.update(screen)
 
 >>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
     # Quit game
@@ -104,6 +98,7 @@ while running:
 =======
     # Enemy movement/bewegingen (coordinaten nog aanpassen) de colission
     #moet hieronder komen!
+<<<<<<< HEAD
     for i in range(num_of_enemy):
 <<<<<<< HEAD
 >>>>>>> 166bb18 (10 enemies toegevoegd en enemy movements)
@@ -132,8 +127,8 @@ pygame.display.update()
         elif enemyX[i] >= 735:
             enemyX_change[i] = -0.5
             enemyY[i] += enemyY_change[i]
+=======
+>>>>>>> e18ac07 (Added classes and file for enemies)
 
-
-        enemy(enemyX[i], enemyY[i], i)
     pygame.display.update()
 >>>>>>> 80bc6a0 (debugs van enemies, is nu klaar)
