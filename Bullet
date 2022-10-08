@@ -1,0 +1,17 @@
+import pygame
+from pygame.locals import *
+import math
+import random
+import button
+from player import Player
+from enemy import Enemy
+from enemy import EnemyGroup
+
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.image.load("assets/images/Bullet Nizar.png")
+
+        self.rect = self.image.get_rect()

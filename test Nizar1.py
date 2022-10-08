@@ -34,7 +34,8 @@ enemy = Enemy(0, 0, 0.5)
 enemyGroup = EnemyGroup(10)
 
 # Bullet spawn
-BulletImage = pygame.image.load("Bullet Nizar.png")
+
+BulletImage = pygame.image.load("assets/images/Bullet Nizar.png")
 BulletX = 0
 BulletY = player.rect.y
 BulletX_Move = 10
