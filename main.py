@@ -11,7 +11,6 @@ from enemy import EnemyGroup
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
-#PLAYER_COLOUR = (148, 24, 24)
 BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
@@ -22,6 +21,7 @@ pygame.init()
 # set up the drawing window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Warriors")
+background_animation = 0
 
 #game objects
 player = Player() #hier roepen wij player aan.
@@ -75,7 +75,12 @@ while start:
 while running:
     
     # achtergrond afbeelding
-    screen.blit(BACKGROUND_IMG, (0,0)) #nieuwe achtergrond toegevoegd
+    screen.blit(BACKGROUND_IMG,(background_animation, 0))#nieuwe achtergrond toegevoegd
+    screen.blit(BACKGROUND_IMG,(SCREEN_WIDTH + background_animation, 0))
+    if (background_animation ==-SCREEN_WIDTH):
+        screen.blit(BACKGROUND_IMG,(SCREEN_WIDTH + background_animation, 0))
+        background_animation = 0
+    background_animation -= 1
     
     # laat enemies zien
     enemyGroup.update(screen)
