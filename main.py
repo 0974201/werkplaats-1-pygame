@@ -10,7 +10,7 @@ from enemy import EnemyGroup
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-BACKGROUND_IMG = pygame.image.load('assets/images/background.png')
+BACKGROUND_IMG = pygame.image.load('assets/images/background1.png')
 BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
@@ -77,7 +77,7 @@ while running:
     # achtergrond afbeelding
     screen.blit(BACKGROUND_IMG,(background_animation, 0))#nieuwe achtergrond toegevoegd
     screen.blit(BACKGROUND_IMG,(SCREEN_WIDTH + background_animation, 0))
-    if (background_animation ==-SCREEN_WIDTH):
+    if (background_animation ==- SCREEN_WIDTH):
         screen.blit(BACKGROUND_IMG,(SCREEN_WIDTH + background_animation, 0))
         background_animation = 0
     background_animation -= 1
