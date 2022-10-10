@@ -6,6 +6,7 @@ import button
 from player import Player
 from enemy import Enemy
 from enemy import EnemyGroup
+from bullet import Bullet
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
@@ -43,12 +44,17 @@ exit_button = button.Button(450, 200, exit_img, 0.5)
 
 # Temp text
 font = pygame.font.SysFont("comicsans", 50)
-textX = 250
-textY = 250
+textX = 10
+textY = 10
 
-def show_text(x, y):
-    text = font.render("Game running", True, (255, 255, 255))
-    screen.blit(text, (x, y))
+score_value = 0
+
+# bullet object
+bullet = Bullet(0, 0)
+
+def show_score(x, y):
+    score = font.render("Score = " + str(score_value), True, (255, 255, 0))
+    screen.blit(score, (x, y))
 
 # start loop
 start = True
@@ -80,6 +86,14 @@ while running:
     # laat enemies zien
     enemyGroup.update(screen)
     
+    #bullet
+    if bullet.bullet_state == "fire":
+        bullet.update(screen)
+
+    if bullet.rect.x > 800:
+        bullet.bullet_state = "ready"
+        bullet.rect.x = 0
+    
     # player movement
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -98,7 +112,10 @@ while running:
                 player.moveX(1)
                 print("right")
             if event.key == pygame.K_SPACE:
-                print("pew")
+                bullet.update(screen)
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                print("space")
                 
         # player movement stoppen
         if event.type == pygame.KEYUP:
@@ -110,9 +127,20 @@ while running:
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
+                
+    # bullet collision
+    hitsBullet = pygame.sprite.spritecollide(bullet, enemyGroup, True)
+    if hitsBullet:
+        bullet.bullet_state = "ready"
+        score_value += 1
+        bullet.rect.y = 0
+        bullet.rect.x = 0
+        enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
+        enemyGroup.add(enemy)
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
+    show_score(textX, textY)
     pygame.display.update()
             
 pygame.quit()
