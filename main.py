@@ -12,6 +12,7 @@ from bullet import Bullet
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BACKGROUND_IMG = pygame.image.load('assets/images/background1.png')
+START_IMG = pygame.image.load('assets/images/background2.png')
 BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
@@ -34,18 +35,22 @@ player_list.add(player) #en is nu toegevoegd.
 enemy = Enemy(0, 0, 0.5)
 enemyGroup = EnemyGroup(10)
 
-# Load button images
-start_img = pygame.image.load("assets/images/start.png")
-exit_img = pygame.image.load("assets/images/exit.png")
-
-# Create buttons
-start_button = button.Button(100, 200, start_img, 0.5)
-exit_button = button.Button(450, 200, exit_img, 0.5)
-
 # Temp text
 font = pygame.font.SysFont("comicsans", 50)
 textX = 10
 textY = 10
+
+# Load button text
+title_text = font.render("Space Warriors", True, (125, 38, 205))
+start_text = font.render("Start", True, (0, 255, 0))
+exit_text = font.render("Exit", True, (255, 0, 0))
+
+# Creat title
+title = button.Button(220, 100, title_text, 1.0)
+
+# Create buttons
+start_button = button.Button(200, 250, start_text, 1.0)
+exit_button = button.Button(500, 250, exit_text, 1.0)
 
 score_value = 0
 
@@ -61,8 +66,11 @@ start = True
 
 while start:
     
-    # Background color
-    screen.fill(BACKGROUND_COLOUR)
+    # Background image
+    screen.blit(START_IMG, (0, 0))
+    
+    if title.draw(screen):
+        start = True
     
     if start_button.draw(screen):
         running = True
