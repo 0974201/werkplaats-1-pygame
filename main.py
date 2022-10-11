@@ -61,6 +61,17 @@ def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
 
+def game_over(self):
+    
+    #Text dat gerendered moet worden
+    game_over_text = font.render("Game over", True, (200, 200, 200))
+    score_text = font.render("Score", True, (200, 200, 200))
+
+    
+    #De tekst die op het scherm getekend word:
+    screen.fill (0,0,0)
+    screen.blit(game_over_text, (10, 60, 120, 50)) 
+
 # start loop
 start = True
 
@@ -155,7 +166,7 @@ while running:
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
         print("collision")
-        running = False
+        
         start = True
         
 
@@ -163,5 +174,7 @@ while running:
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm    
     show_score(textX, textY)
     pygame.display.update()
+
+
             
 pygame.quit()
