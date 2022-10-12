@@ -76,17 +76,6 @@ def game_over():
     pygame.display.update()
     pygame.time.delay(2000)
 
-# def game_over(self):
-    
-#     #Text dat gerendered moet worden
-#     game_over_text = font.render("Game over", True, (200, 200, 200))
-#     score_text = font.render("Score", True, (200, 200, 200))
-
-    
-#     #De tekst die op het scherm getekend word:
-#     screen.fill (0,0,0)
-#     screen.blit(game_over_text, (10, 60, 120, 50)) 
-
 # start loop
 start = True
 
@@ -177,7 +166,7 @@ while running:
         enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
         enemyGroup.add(enemy)
                 
-    # player collision
+    # player collision 
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
         player.lives -= 1
@@ -194,8 +183,6 @@ while running:
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm    
     show_score(textX, textY) # laat de score zien
     show_lives(textX, textY + 50) # laat de lives zien
-    pygame.display.update()
-
-
+    pygame.display.update() #update het scherm
             
 pygame.quit()
