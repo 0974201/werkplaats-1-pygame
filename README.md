@@ -1,12 +1,16 @@
-# Werkplaats 1: PyGame
-Je vindt de presentatie met de opdrachtomschrijving op Teams in de "Bestanden" van Werkplaats 1. 
+# Space Warriors
 
-Gebruik dit bestand om te omschrijven hoe jouw code gestart kan worden. Ga er in jouw instructie van uit dat de gebruiker de benodigde bibliotheken nog niet heeft geïnstalleerd.
+Dit is een side shooter genaamd Space Warriors.
+Het doel is om de aliens te doden en om een zo hoog mogelijke score te halen.
+
+Om de game te starten op je het main.py bestand.
 
 
-# Pygame installatie
+# Installatie
 
-Installeer pygame met pip:
+Installeer de laatste python versie via deze [link](https://www.python.org/downloads/).
+
+Installeer de laatste pygame versie met pip:
     
 ```python
 pip install -r requirements.txt
