@@ -2,11 +2,11 @@ import pygame
 from pygame.locals import *
 import math
 import random
-import button
-from player import Player
-from enemy import Enemy
-from enemy import EnemyGroup
-from bullet import Bullet
+import lib.button as button
+from lib.player import Player
+from lib.enemy import Enemy
+from lib.enemy import EnemyGroup
+from lib.bullet import Bullet
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
