@@ -66,9 +66,9 @@ def show_score(x, y):
     screen.blit(score, (x, y))
 
 def write_score():
-    write_test = open("score.txt", "a")
-    write_test.write(str(score_value))
-    write_test.close()
+    write_hs = open("score.txt", "a") #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creeëren en daarna mag aanpassen
+    write_hs.write(str(score_value)) #schrijft naar bestand die hierboven is aangemaakt
+    write_hs.close() #sluit de file, zodat het nog gebruikt kan worden later
 
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
