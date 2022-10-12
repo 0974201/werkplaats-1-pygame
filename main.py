@@ -49,8 +49,10 @@ game_over_text = font.render("Game over", True, (200, 200, 200))
 # Lives
 lives_text = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
 
-# Creat title
+# Creat title and icon
 title = button.Button(220, 100, title_text, 1.0)
+icon = pygame.image.load("assets/images/ship.png")
+pygame.display.set_icon(icon)
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
