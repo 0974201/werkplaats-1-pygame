@@ -2,15 +2,17 @@ import pygame
 from pygame.locals import *
 import math
 import random
-import button
-from player import Player
-from enemy import Enemy
-from enemy import EnemyGroup
+import lib.button as button
+from lib.player import Player
+from lib.enemy import Enemy
+from lib.enemy import EnemyGroup
+from lib.bullet import Bullet
 
 #const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BACKGROUND_IMG = pygame.image.load('assets/images/background1.png')
+START_IMG = pygame.image.load('assets/images/background2.png')
 BACKGROUND_COLOUR = (31, 29, 29) 
 #https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 #https://deep-fold.itch.io/space-background-generator
@@ -33,30 +35,59 @@ player_list.add(player) #en is nu toegevoegd.
 enemy = Enemy(0, 0, 0.5)
 enemyGroup = EnemyGroup(10)
 
-# Load button images
-start_img = pygame.image.load("assets/images/start.png")
-exit_img = pygame.image.load("assets/images/exit.png")
-
-# Create buttons
-start_button = button.Button(100, 200, start_img, 0.5)
-exit_button = button.Button(450, 200, exit_img, 0.5)
-
 # Temp text
 font = pygame.font.SysFont("comicsans", 50)
-textX = 250
-textY = 250
+textX = 10
+textY = 10
 
-def show_text(x, y):
-    text = font.render("Game running", True, (255, 255, 255))
-    screen.blit(text, (x, y))
+# Load button text
+title_text = font.render("Space Warriors", True, (125, 38, 205))
+start_text = font.render("Start", True, (0, 255, 0))
+exit_text = font.render("Exit", True, (255, 0, 0))
+game_over_text = font.render("Game over", True, (200, 200, 200))
+
+# Lives
+lives_text = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
+
+# Creat title and icon
+title = button.Button(220, 100, title_text, 1.0)
+icon = pygame.image.load("assets/images/ship.png")
+pygame.display.set_icon(icon)
+
+# Create buttons
+start_button = button.Button(200, 250, start_text, 1.0)
+exit_button = button.Button(500, 250, exit_text, 1.0)
+
+score_value = 0
+
+# bullet object
+bullet = Bullet(0, 0)
+
+def show_score(x, y):
+    score = font.render("Score = " + str(score_value), True, (255, 255, 0))
+    screen.blit(score, (x, y))
+    
+def show_lives(x, y):
+    lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
+    screen.blit(lives, (x, y))
+    
+def game_over():
+    screen.blit(game_over_text, (300, 250))
+    highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
+    screen.blit(highscore, (180, 300))
+    pygame.display.update()
+    pygame.time.delay(2000)
 
 # start loop
 start = True
 
 while start:
     
-    # Background color
-    screen.fill(BACKGROUND_COLOUR)
+    # Background image
+    screen.blit(START_IMG, (0, 0))
+    
+    if title.draw(screen):
+        start = True
     
     if start_button.draw(screen):
         running = True
@@ -85,6 +116,14 @@ while running:
     # laat enemies zien
     enemyGroup.update(screen)
     
+    #bullet
+    if bullet.bullet_state == "fire":
+        bullet.update(screen)
+
+    if bullet.rect.x > 800:
+        bullet.bullet_state = "ready"
+        bullet.rect.x = 0
+    
     # player movement
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -103,7 +142,10 @@ while running:
                 player.moveX(1)
                 print("right")
             if event.key == pygame.K_SPACE:
-                print("pew")
+                bullet.update(screen)
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                print("space")
                 
         # player movement stoppen
         if event.type == pygame.KEYUP:
@@ -114,17 +156,35 @@ while running:
                 player.moveX(0)
                 print("key released")
             if event.key == pygame.K_SPACE:
-                print("spacebar released") 
+                print("spacebar released")
+    
+    # bullet collision
+    hitsBullet = pygame.sprite.spritecollide(bullet, enemyGroup, True)
+    if hitsBullet:
+        bullet.bullet_state = "ready"
+        score_value += 1
+        bullet.rect.y = 0
+        bullet.rect.x = 0
+        enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
+        enemyGroup.add(enemy)
                 
-    # player collision
+    # player collision 
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
-        print("collision")
-        running = False
-        start = True
+        player.lives -= 1
+        player.rect.x = 0
+        player.rect.y = 300
+        if player.lives == 0:
+            enemyGroup.empty()
+            player_list.empty()
+            game_over()
+            running = False
         
+
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm    
-    pygame.display.update()
+    show_score(textX, textY) # laat de score zien
+    show_lives(textX, textY + 50) # laat de lives zien
+    pygame.display.update() #update het scherm
             
 pygame.quit()

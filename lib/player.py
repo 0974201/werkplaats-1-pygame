@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('assets/images/ship.png') #hier gaat img voor player object in
         #self.image.fill(colour) #hier krijgt t een kleurtje, kan ook achterwege gelaten worden als er een img file gebruikt wordt.
         self.rect = self.image.get_rect() #haalt op wat er in bovenstaande regels is aangemaakt
-        
+        self.lives = 3
         self.changeX = 0
         self.changeY = 0
 
