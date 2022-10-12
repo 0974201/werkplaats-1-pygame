@@ -1,6 +1,4 @@
 import pygame
-from pygame.locals import *
-import math
 import random
 import lib.button as button
 from lib.player import Player
@@ -66,7 +64,12 @@ bullet = Bullet(0, 0)
 def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
-    
+
+def write_score():
+    write_test = open("score.txt", "a")
+    write_test.write(str(score_value))
+    write_test.close()
+
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
@@ -178,6 +181,7 @@ while running:
             enemyGroup.empty()
             player_list.empty()
             game_over()
+            write_score()
             running = False
         
 
