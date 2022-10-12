@@ -44,6 +44,10 @@ textY = 10
 title_text = font.render("Space Warriors", True, (125, 38, 205))
 start_text = font.render("Start", True, (0, 255, 0))
 exit_text = font.render("Exit", True, (255, 0, 0))
+game_over_text = font.render("Game over", True, (200, 200, 200))
+
+# Lives
+lives_text = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
 
 # Creat title
 title = button.Button(220, 100, title_text, 1.0)
@@ -60,17 +64,28 @@ bullet = Bullet(0, 0)
 def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
-
-def game_over(self):
     
-    #Text dat gerendered moet worden
-    game_over_text = font.render("Game over", True, (200, 200, 200))
-    score_text = font.render("Score", True, (200, 200, 200))
+def show_lives(x, y):
+    lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
+    screen.blit(lives, (x, y))
+    
+def game_over():
+    screen.blit(game_over_text, (300, 250))
+    highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
+    screen.blit(highscore, (180, 300))
+    pygame.display.update()
+    pygame.time.delay(2000)
+
+# def game_over(self):
+    
+#     #Text dat gerendered moet worden
+#     game_over_text = font.render("Game over", True, (200, 200, 200))
+#     score_text = font.render("Score", True, (200, 200, 200))
 
     
-    #De tekst die op het scherm getekend word:
-    screen.fill (0,0,0)
-    screen.blit(game_over_text, (10, 60, 120, 50)) 
+#     #De tekst die op het scherm getekend word:
+#     screen.fill (0,0,0)
+#     screen.blit(game_over_text, (10, 60, 120, 50)) 
 
 # start loop
 start = True
@@ -151,7 +166,7 @@ while running:
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
-                
+    
     # bullet collision
     hitsBullet = pygame.sprite.spritecollide(bullet, enemyGroup, True)
     if hitsBullet:
@@ -165,14 +180,20 @@ while running:
     # player collision
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
-        print("collision")
-        
-        start = True
+        player.lives -= 1
+        player.rect.x = 0
+        player.rect.y = 300
+        if player.lives == 0:
+            enemyGroup.empty()
+            player_list.empty()
+            game_over()
+            running = False
         
 
     player_list.draw(screen) #alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
     player_list.update() #was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm    
-    show_score(textX, textY)
+    show_score(textX, textY) # laat de score zien
+    show_lives(textX, textY + 50) # laat de lives zien
     pygame.display.update()
 
 
