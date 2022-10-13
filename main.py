@@ -66,9 +66,9 @@ def show_score(x, y):
     screen.blit(score, (x, y))
 
 def write_score(): #zou dit bij assets kunnen????? who knows!!!
-    write_hs = open("score.txt", "a") #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
-    write_hs.write(f"{str(score_value)} \n") #schrijft naar bestand die hierboven is aangemaakt
-    write_hs.close() #sluit de file, zodat het nog gebruikt kan worden later
+    with open("score.txt", "a") as write_hs: #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
+        write_hs.write(f"{str(score_value)}\n") #schrijft naar bestand die hierboven is aangemaakt
+        #with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
 
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
