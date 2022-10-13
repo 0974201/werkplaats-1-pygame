@@ -51,6 +51,9 @@ title = button.Button(220, 100, title_text, 1.0)
 icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
+#music
+pygame.mixer.music.load("assets/music/bg_music.mp3") #dit wordt niet de final bgm, dit is een placeholder
+
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
@@ -77,6 +80,7 @@ def game_over():
     screen.blit(game_over_text, (300, 250))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     screen.blit(highscore, (180, 300))
+    pygame.mixer.music.stop()
     pygame.display.update()
     pygame.time.delay(2000)
 
@@ -87,6 +91,10 @@ while start:
     
     # Background image
     screen.blit(START_IMG, (0, 0))
+
+    #music
+    pygame.mixer.music.play(-1) #-1 zorgt dat bgm blijft loopen (hier gezet omdat hij anders niet speelde)
+    pygame.mixer.music.set_volume(0.0) #volume, waarde moet ergens tussen 0.1 en 1.0 zijn
     
     if title.draw(screen):
         start = True
@@ -114,6 +122,9 @@ while running:
         screen.blit(BACKGROUND_IMG,(SCREEN_WIDTH + background_animation, 0))
         background_animation = 0
     background_animation -= 1
+    
+    #music
+    pygame.mixer.music.set_volume(0.1) 
     
     # laat enemies zien
     enemyGroup.update(screen)
