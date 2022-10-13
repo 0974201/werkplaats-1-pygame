@@ -29,8 +29,7 @@ player.rect.y = 300 #wordt op 300px gespawned
 player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
 
-# Enemy (coordinaten nog aanpassen naar side shooter)
-enemy = Enemy(0, 0, 0.5)
+# Enemy
 enemyGroup = EnemyGroup(10)
 
 # Temp text
@@ -168,7 +167,7 @@ while running:
         score_value += 1
         bullet.rect.y = 0
         bullet.rect.x = 0
-        enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
+        enemy = Enemy(random.randint(350, 750), random.randint(0, 350), 5.5)
         enemyGroup.add(enemy)
                 
     # player collision 
