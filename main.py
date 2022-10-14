@@ -17,6 +17,7 @@ BACKGROUND_COLOUR = (31, 29, 29)
 
 # initialize pygame
 pygame.init()
+pygame.mixer.init(2)
 
 # set up the drawing window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -124,7 +125,7 @@ while running:
     background_animation -= 1
     
     #music
-    pygame.mixer.music.set_volume(0.1) 
+    pygame.mixer.music.set_volume(0.2) 
     
     # laat enemies zien
     enemyGroup.update(screen)
