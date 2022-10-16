@@ -16,8 +16,8 @@ BACKGROUND_COLOUR = (31, 29, 29)
 #https://deep-fold.itch.io/space-background-generator
 
 # initialize pygame
+pygame.mixer.init(44100, -16, 2, 65536) #2 is voor stereo, Y U KEEP DYING
 pygame.init()
-pygame.mixer.init(2)
 
 # set up the drawing window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -31,6 +31,7 @@ player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
 
 # Enemy
+enemy = Enemy(0,0,0)
 enemyGroup = EnemyGroup(10)
 
 # Temp text
@@ -53,7 +54,9 @@ icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
 #music
-pygame.mixer.music.load("assets/music/bg_music.mp3") #dit wordt niet de final bgm, dit is een placeholder
+start_bg = pygame.mixer.Sound("assets/music/start_music.mp3")
+game_bg = pygame.mixer.Sound("assets/music/bg_music.mp3") #dit wordt niet de final bgm, dit is een placeholder
+#ship_sfx = pygame.mixer.Sound("assets/music/objection.mp3") #ook een placeholder
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
@@ -76,12 +79,17 @@ def write_score(): #zou dit bij assets kunnen????? who knows!!!
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
+
+def play_sfx():
+    pygame.mixer.music.load("assets/music/mgs_bleep.wav")
+    pygame.mixer.music.play(0)
+    pygame.mixer.music.set_volume(1.0)
     
 def game_over():
     screen.blit(game_over_text, (300, 250))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     screen.blit(highscore, (180, 300))
-    pygame.mixer.music.stop()
+    pygame.mixer.Sound.stop(game_bg)
     pygame.display.update()
     pygame.time.delay(2000)
 
@@ -94,9 +102,9 @@ while start:
     screen.blit(START_IMG, (0, 0))
 
     #music
-    pygame.mixer.music.play(-1) #-1 zorgt dat bgm blijft loopen (hier gezet omdat hij anders niet speelde)
-    pygame.mixer.music.set_volume(0.0) #volume, waarde moet ergens tussen 0.1 en 1.0 zijn
-    
+    pygame.mixer.Sound.play(start_bg, -1)#-1 zorgt dat bgm blijft loopen
+    pygame.mixer.Sound.set_volume(start_bg, 0.2) #volume, waarde moet ergens tussen 0.1 en 1.0 zijn
+
     if title.draw(screen):
         start = True
     
@@ -125,7 +133,9 @@ while running:
     background_animation -= 1
     
     #music
-    pygame.mixer.music.set_volume(0.2) 
+    pygame.mixer.Sound.stop(start_bg)
+    pygame.mixer.Sound.play(game_bg, -1)
+    pygame.mixer.Sound.set_volume(game_bg, 0.2)
     
     # laat enemies zien
     enemyGroup.update(screen)
@@ -137,26 +147,23 @@ while running:
     if bullet.rect.x > 800:
         bullet.bullet_state = "ready"
         bullet.rect.x = 0
-    
+
     # player movement
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
+                play_sfx()
                 player.moveY(-1)
                 print("up")
             if event.key == pygame.K_DOWN:
+                play_sfx()
                 player.moveY(1)
                 print("down")
-            if event.key == pygame.K_LEFT:
-                player.moveX(-1)
-                print("left")
-            if event.key == pygame.K_RIGHT:
-                player.moveX(1)
-                print("right")
             if event.key == pygame.K_SPACE:
                 bullet.update(screen)
+                play_sfx()
                 bullet.rect.x = player.rect.x
                 bullet.rect.y = player.rect.y
                 print("space")
@@ -165,9 +172,6 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN: 
                 player.moveY(0)
-                print("key released")
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                player.moveX(0)
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
@@ -179,7 +183,7 @@ while running:
         score_value += 1
         bullet.rect.y = 0
         bullet.rect.x = 0
-        enemy = Enemy(random.randint(350, 750), random.randint(0, 350), 5.5)
+        enemy = Enemy(random.randint(220, 700), random.randint(0, 550), 10)
         enemyGroup.add(enemy)
                 
     # player collision 
