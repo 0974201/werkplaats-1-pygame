@@ -102,7 +102,7 @@ def game_over():
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
     screen.blit(highscore,(180, 300))
-    screen.blit(highest_hs,(90, 400))
+    screen.blit(highest_hs,(85, 400))
     pygame.mixer.Sound.stop(game_bg)
     pygame.display.update()
     pygame.time.delay(2000)
