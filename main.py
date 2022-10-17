@@ -56,12 +56,13 @@ pygame.display.set_icon(icon)
 #music
 start_bg = pygame.mixer.Sound("assets/music/start_music.mp3")
 game_bg = pygame.mixer.Sound("assets/music/bg_music.mp3") #dit wordt niet de final bgm, dit is een placeholder
-#ship_sfx = pygame.mixer.Sound("assets/music/objection.mp3") #ook een placeholder
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
 
+#score
+hs_list = []
 score_value = 0
 
 # bullet object
@@ -76,19 +77,32 @@ def write_score(): #zou dit bij assets kunnen????? who knows!!!
         write_hs.write(f"{str(score_value)}\n") #schrijft naar bestand die hierboven is aangemaakt
         #with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
 
+def get_hs():
+    hs = ""
+    with open("score.txt", 'r') as score:
+        score_list = score.readlines() #leest alle regels in txt bestand
+
+        for score in reversed(score_list):
+            hs_list.append(int(score)) #in list zetten
+
+    hs = str(max(hs_list)) #casten naar string
+    return hs
+
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
 
 def play_sfx():
-    pygame.mixer.music.load("assets/music/mgs_bleep.wav")
+    pygame.mixer.music.load("assets/music/mgs_bleep.wav") #ook een placeholder
     pygame.mixer.music.play(0)
     pygame.mixer.music.set_volume(1.0)
     
 def game_over():
     screen.blit(game_over_text, (300, 250))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
-    screen.blit(highscore, (180, 300))
+    highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
+    screen.blit(highscore,(180, 300))
+    screen.blit(highest_hs,(90, 400))
     pygame.mixer.Sound.stop(game_bg)
     pygame.display.update()
     pygame.time.delay(2000)
