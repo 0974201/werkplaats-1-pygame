@@ -1,6 +1,4 @@
 import pygame
-from pygame.locals import *
-import math
 import random
 import lib.button as button
 from lib.player import Player
@@ -18,6 +16,7 @@ BACKGROUND_COLOUR = (31, 29, 29)
 #https://deep-fold.itch.io/space-background-generator
 
 # initialize pygame
+pygame.mixer.init(44100, -16, 2, 65536) #2 is voor stereo, Y U KEEP DYING
 pygame.init()
 
 # set up the drawing window
@@ -31,8 +30,8 @@ player.rect.y = 300 #wordt op 300px gespawned
 player_list = pygame.sprite.Group() #hier gaat de sprite voor player in
 player_list.add(player) #en is nu toegevoegd.
 
-# Enemy (coordinaten nog aanpassen naar side shooter)
-enemy = Enemy(0, 0, 0.5)
+# Enemy
+enemy = Enemy(0,0,0)
 enemyGroup = EnemyGroup(10)
 
 # Temp text
@@ -54,10 +53,16 @@ title = button.Button(220, 100, title_text, 1.0)
 icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
+#music
+start_bg = pygame.mixer.Sound("assets/music/start_music.mp3")
+game_bg = pygame.mixer.Sound("assets/music/bg_music.mp3") #dit wordt niet de final bgm, dit is een placeholder
+
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
 
+#score
+hs_list = []
 score_value = 0
 
 # bullet object
@@ -66,15 +71,39 @@ bullet = Bullet(0, 0)
 def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
-    
+
+def write_score(): #zou dit bij assets kunnen????? who knows!!!
+    with open("score.txt", "a") as write_hs: #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
+        write_hs.write(f"{str(score_value)}\n") #schrijft naar bestand die hierboven is aangemaakt
+        #with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
+
+def get_hs():
+    hs = ""
+    with open("score.txt", 'r') as score:
+        score_list = score.readlines() #leest alle regels in txt bestand
+
+        for score in reversed(score_list):
+            hs_list.append(int(score)) #in list zetten
+
+    hs = str(max(hs_list)) #casten naar string
+    return hs
+
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
+
+def play_sfx():
+    pygame.mixer.music.load("assets/music/mgs_bleep.wav") #ook een placeholder
+    pygame.mixer.music.play(0)
+    pygame.mixer.music.set_volume(1.0)
     
 def game_over():
     screen.blit(game_over_text, (300, 250))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
-    screen.blit(highscore, (180, 300))
+    highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
+    screen.blit(highscore,(180, 300))
+    screen.blit(highest_hs,(85, 400))
+    pygame.mixer.Sound.stop(game_bg)
     pygame.display.update()
     pygame.time.delay(2000)
 
@@ -85,7 +114,11 @@ while start:
     
     # Background image
     screen.blit(START_IMG, (0, 0))
-    
+
+    #music
+    pygame.mixer.Sound.play(start_bg, -1)#-1 zorgt dat bgm blijft loopen
+    pygame.mixer.Sound.set_volume(start_bg, 0.2) #volume, waarde moet ergens tussen 0.1 en 1.0 zijn
+
     if title.draw(screen):
         start = True
     
@@ -113,6 +146,11 @@ while running:
         background_animation = 0
     background_animation -= 1
     
+    #music
+    pygame.mixer.Sound.stop(start_bg)
+    pygame.mixer.Sound.play(game_bg, -1)
+    pygame.mixer.Sound.set_volume(game_bg, 0.2)
+    
     # laat enemies zien
     enemyGroup.update(screen)
     
@@ -123,26 +161,23 @@ while running:
     if bullet.rect.x > 800:
         bullet.bullet_state = "ready"
         bullet.rect.x = 0
-    
+
     # player movement
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
+                play_sfx()
                 player.moveY(-1)
                 print("up")
             if event.key == pygame.K_DOWN:
+                play_sfx()
                 player.moveY(1)
                 print("down")
-            if event.key == pygame.K_LEFT:
-                player.moveX(-1)
-                print("left")
-            if event.key == pygame.K_RIGHT:
-                player.moveX(1)
-                print("right")
             if event.key == pygame.K_SPACE:
                 bullet.update(screen)
+                play_sfx()
                 bullet.rect.x = player.rect.x
                 bullet.rect.y = player.rect.y
                 print("space")
@@ -151,9 +186,6 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN: 
                 player.moveY(0)
-                print("key released")
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                player.moveX(0)
                 print("key released")
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
@@ -165,7 +197,7 @@ while running:
         score_value += 1
         bullet.rect.y = 0
         bullet.rect.x = 0
-        enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
+        enemy = Enemy(random.randint(220, 700), random.randint(0, 550), 10)
         enemyGroup.add(enemy)
                 
     # player collision 
@@ -178,6 +210,7 @@ while running:
             enemyGroup.empty()
             player_list.empty()
             game_over()
+            write_score()
             running = False
         
 

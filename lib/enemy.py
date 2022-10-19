@@ -31,7 +31,7 @@ class EnemyGroup(Group):
     def __init__(self, num_of_enemy):
         super().__init__()
         for i in range(num_of_enemy):
-            enemy = Enemy(random.randint(350, 750), random.randint(0, 350), 1.0)
+            enemy = Enemy(random.randint(300, 770), random.randint(0, 570), 1.0)
             self.add(enemy)
 
     def move(self):
