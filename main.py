@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame import mixer
 import lib.button as button
 from lib.player import Player
 from lib.enemy import Enemy
@@ -16,7 +17,6 @@ BACKGROUND_COLOUR = (31, 29, 29)
 # https://deep-fold.itch.io/space-background-generator
 
 # initialize pygame
-pygame.mixer.init(44100, -16, 2, 65536)  # 2 is voor stereo, Y U KEEP DYING
 pygame.init()
 
 # set up the drawing window
@@ -54,10 +54,10 @@ icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
 # sounds
-start_bg = pygame.mixer.Sound("assets/sounds/Floating in Nothingness.wav")
-game_bg = pygame.mixer.Sound("assets/sounds/Floating in Nothingness.wav")
-hit_sound = pygame.mixer.Sound("assets/sounds/SHOOT HIT.aif")
-game_sound = pygame.mixer.Sound("assets/sounds/GAME HIT.aif")
+mixer.music.load("assets/sounds/Floating In Nothingness.wav")
+mixer.music.play(-1)
+hit_sound = pygame.mixer.Sound("assets/sounds/HIT.wav")
+game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
@@ -103,24 +103,6 @@ def show_lives(x, y):
     screen.blit(lives, (x, y))
 
 
-def play_sfx():
-    pygame.mixer.music.load("assets/music/mgs_bleep.wav")  # ook een placeholder
-    pygame.mixer.music.play(0)
-    pygame.mixer.music.set_volume(1.0)
-
-
-def game_hit():
-    pygame.mixer.Sound.play(game_sound)
-    pygame.mixer.music.play(0)
-    pygame.mixer.Sound.set_volume(game_sound, 0.5)
-
-
-def play_hit_sfx():
-    pygame.mixer.Sound.play(hit_sound)
-    pygame.mixer.music.play(0)
-    pygame.mixer.Sound.set_volume(hit_sound, 0.5)
-
-
 def game_over():
     screen.blit(game_over_text, (300, 250))
     highscore = font.render(
@@ -129,7 +111,6 @@ def game_over():
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
     screen.blit(highscore, (180, 300))
     screen.blit(highest_hs, (85, 400))
-    pygame.mixer.Sound.stop(game_bg)
     pygame.display.update()
     pygame.time.delay(2000)
 
@@ -143,10 +124,10 @@ while start:
     screen.blit(START_IMG, (0, 0))
 
     # music
-    pygame.mixer.Sound.play(start_bg, -1)  # -1 zorgt dat bgm blijft loopen
-    pygame.mixer.Sound.set_volume(
-        start_bg, 0.2
-    )  # volume, waarde moet ergens tussen 0.1 en 1.0 zijn
+    # pygame.mixer.Sound.play(start_bg, -1)  # -1 zorgt dat bgm blijft loopen
+    # pygame.mixer.Sound.set_volume(
+    #     start_bg, 0.2
+    # )  # volume, waarde moet ergens tussen 0.1 en 1.0 zijn
 
     if title.draw(screen):
         start = True
@@ -177,11 +158,6 @@ while running:
         background_animation = 0
     background_animation -= 1
 
-    # music
-    pygame.mixer.Sound.stop(start_bg)
-    pygame.mixer.Sound.play(game_bg, -1)
-    pygame.mixer.Sound.set_volume(game_bg, 0.2)
-
     # laat enemies zien
     enemyGroup.update(screen)
 
@@ -205,6 +181,7 @@ while running:
                 player.moveY(1)
                 print("down")
             if event.key == pygame.K_SPACE:
+                game_sound.play()
                 bullet.update(screen)
                 bullet.rect.x = player.rect.x
                 bullet.rect.y = player.rect.y
@@ -225,7 +202,7 @@ while running:
         score_value += 1
         bullet.rect.y = 0
         bullet.rect.x = 0
-        play_hit_sfx()
+        hit_sound.play()
         enemy = Enemy(random.randint(220, 700), random.randint(0, 550), 10)
         enemyGroup.add(enemy)
 
@@ -235,7 +212,7 @@ while running:
         player.lives -= 1
         player.rect.x = 0
         player.rect.y = 300
-        game_hit()
+        game_sound.play()
         if player.lives == 0:
             enemyGroup.empty()
             player_list.empty()
