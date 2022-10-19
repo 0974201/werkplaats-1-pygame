@@ -203,7 +203,7 @@ while running:
         bullet.rect.y = 0
         bullet.rect.x = 0
         hit_sound.play()
-        enemy = Enemy(random.randint(220, 700), random.randint(0, 550), 10)
+        enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
         enemyGroup.add(enemy)
 
     # player collision

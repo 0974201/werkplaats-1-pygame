@@ -16,11 +16,11 @@ class Enemy(Sprite):
     def move(self):
         self.rect.y += self.speed
         if self.rect.y <= 0:
-            self.speed = 1.0
-            self.rect.x += -20
+            self.speed = random.randint(1, 3)
+            self.rect.x += random.randint(-40, -20)
         elif self.rect.y >= 570:
-            self.speed = -1.0
-            self.rect.x += -20
+            self.speed = random.randint(-3, -1)
+            self.rect.x += random.randint(-40, -20)
 
     def update(self, screen):
         self.move()
@@ -31,7 +31,7 @@ class EnemyGroup(Group):
     def __init__(self, num_of_enemy):
         super().__init__()
         for i in range(num_of_enemy):
-            enemy = Enemy(random.randint(300, 770), random.randint(0, 570), 1.0)
+            enemy = Enemy(random.randint(400, 570), random.randint(20, 150), 1.0)
             self.add(enemy)
 
     def move(self):
