@@ -108,7 +108,8 @@ def game_over():
     highscore = font.render(
         "Your final score = " + str(score_value), True, (255, 255, 0)
     )
-    highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
+    highest_hs = font.render("All time highscore = " +
+                             get_hs(), True, (255, 255, 0))
     screen.blit(highscore, (180, 300))
     screen.blit(highest_hs, (85, 400))
     pygame.display.update()
@@ -162,11 +163,15 @@ while running:
     enemyGroup.update(screen)
 
     # bullet
+
+    # ready - je kan de bullet niet zien
+    # fire - je ziet de bullet verschijnen
+
     if bullet.bullet_state == "fire":
         bullet.update(screen)
 
     if bullet.rect.x > 800:
-        bullet.bullet_state = "ready"
+        bullet.bullet_state = "ready "
         bullet.rect.x = 0
 
     # player movement
@@ -180,6 +185,7 @@ while running:
             if event.key == pygame.K_DOWN:
                 player.moveY(1)
                 print("down")
+
             if event.key == pygame.K_SPACE:
                 game_sound.play()
                 bullet.update(screen)
@@ -192,6 +198,7 @@ while running:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 player.moveY(0)
                 print("key released")
+        # bullet movement stoppen
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
 
@@ -223,7 +230,8 @@ while running:
     player_list.draw(
         screen
     )  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
-    player_list.update()  # was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
+    # was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
+    player_list.update()
     show_score(textX, textY)  # laat de score zien
     show_lives(textX, textY + 50)  # laat de lives zien
     pygame.display.update()  # update het scherm

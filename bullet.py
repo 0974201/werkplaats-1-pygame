@@ -1,9 +1,6 @@
-from email.headerregistry import Group
-from tokenize import group
 import pygame
 from pygame.locals import *
 from pygame.sprite import Sprite
-
 
 class Bullet(Sprite):
     def __init__(self, x, y):
@@ -22,20 +19,6 @@ class Bullet(Sprite):
     def update(self, screen):
         self.move()
         screen.blit(self.image, self.rect)
-
-
-class BulletGroup(Group):
-    def __init__(self):
-        super().__init__()
-        for i in range(num_of_enemy):
-            enemy = Enemy(random.randint(400, 570),
-                          random.randint(20, 150), 1.0)
-            self.add(enemy)
-
-    def move(self):
-        for enemy in self.sprites():
-            enemy.move()
-
-    def update(self, screen):
-        for enemy in self.sprites():
-            enemy.update(screen)
+        
+        
+    
