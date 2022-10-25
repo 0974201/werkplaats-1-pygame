@@ -1,3 +1,4 @@
+from re import T
 import pygame
 import random
 from pygame import mixer
@@ -12,6 +13,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BACKGROUND_IMG = pygame.image.load("assets/images/background1.png")
 START_IMG = pygame.image.load("assets/images/background2.png")
+TUTORIAL_IMG = pygame.image.load("assets/images/background.png")
 BACKGROUND_COLOUR = (31, 29, 29)
 # https://helianthus-games.itch.io/pixel-art-space-shooter-kit
 # https://deep-fold.itch.io/space-background-generator
@@ -133,20 +135,24 @@ while start:
     if title.draw(screen):
         start = True
     if tutorial_button.draw(screen):
-        running = True
-        start = False
+        start = True
+        screen.blit(TUTORIAL_IMG, (0, 0))
     if start_button.draw(screen):
         running = True
         start = False
     if exit_button.draw(screen):
         start = False
 
+    for event in pygame.event.get():
+        if event.type == tutorial_button:
+            screen.blit(TUTORIAL_IMG, (0, 0))
     # Quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             start = False
 
     pygame.display.update()
+
 
 # game loop
 while running:
