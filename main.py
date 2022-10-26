@@ -43,6 +43,7 @@ textY = 10
 title_text = font.render("Space Warriors", True, (125, 38, 205))
 start_text = font.render("Start", True, (0, 255, 0))
 exit_text = font.render("Exit", True, (255, 0, 0))
+tutorial_text = font.render("Tutorial", True, (250, 250, 10))
 game_over_text = font.render("Game over", True, (200, 200, 200))
 
 # Lives
@@ -62,7 +63,7 @@ game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
-
+tutorial_button = button.Button(300, 450, tutorial_text, 1.0)
 # score
 hs_list = []
 score_value = 0
@@ -132,7 +133,9 @@ while start:
 
     if title.draw(screen):
         start = True
-
+    if tutorial_button.draw(screen):
+        running = True
+        start = False
     if start_button.draw(screen):
         running = True
         start = False
