@@ -80,24 +80,21 @@ def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
 
-
-def write_score():  # zou dit bij assets kunnen????? who knows!!!
-    with open("score.txt", "a") as write_hs:  # maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
-        write_hs.write(f"{str(score_value)}\n")  # schrijft naar bestand die hierboven is aangemaakt
-        # with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
-
+def write_score(): #zou dit bij assets kunnen????? who knows!!!
+    with open("score.txt", "a") as write_hs: #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
+        write_hs.write(f"{str(score_value)}\n") #schrijft naar bestand die hierboven is aangemaakt
+        #with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
 
 def get_hs():
     hs = ""
-    with open("score.txt", "r") as score:
-        score_list = score.readlines()  # leest alle regels in txt bestand
+    with open("score.txt", 'r') as score:
+        score_list = score.readlines() #leest alle regels in txt bestand
 
         for score in reversed(score_list):
-            hs_list.append(int(score))  # in list zetten
+            hs_list.append(int(score)) #in list zetten
 
-    hs = str(max(hs_list))  # casten naar string
+    hs = str(max(hs_list)) #casten naar string
     return hs
-
 
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
@@ -252,7 +249,7 @@ while running:
             bullet_group.empty()
             player_list.empty()
             game_over()
-            #write_score()
+            write_score()
             running = False
 
     player_list.draw(screen)  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
