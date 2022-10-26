@@ -1,4 +1,3 @@
-from re import T
 import pygame, random, pyautogui
 from pygame import *
 import lib.button as button
@@ -101,14 +100,14 @@ def show_lives(x, y):
 
 
 def game_over():
-    screen.blit(game_over_text, (300, 250))
+    screen.blit(game_over_text, (280, 150))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
     write_score()
-    screen.blit(highscore, (180, 300))
-    screen.blit(highest_hs, (85, 400))
+    screen.blit(highscore, (180, 250))
+    screen.blit(highest_hs, (90, 300))
     pygame.display.update()
-    pygame.time.delay(2000)
+    pygame.time.delay(3000)
 
 
 # start loop
@@ -253,7 +252,6 @@ while running:
             bullet_group.empty()
             player_list.empty()
             game_over()
-            #write_score()
             running = False
 
     player_list.draw(screen)  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
