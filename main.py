@@ -34,7 +34,7 @@ player_list = pygame.sprite.Group()  # hier gaat de sprite voor player in
 player_list.add(player)  # en is nu toegevoegd.
 
 # Enemy
-enemy = Enemy(0, 0, 0)
+enemy = Enemy(0, 0, 15)
 enemyGroup = EnemyGroup(10)
 
 # Temp text
@@ -58,8 +58,8 @@ icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
 # sounds
-mixer.music.load("assets/sounds/Floating In Nothingness.wav")
-mixer.music.play(-1)
+# mixer.music.load("assets/sounds/Floating In Nothingness.wav")
+# mixer.music.play(-1)
 hit_sound = pygame.mixer.Sound("assets/sounds/HIT.wav")
 game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 
@@ -225,8 +225,11 @@ while running:
         enemyGroup.add(enemy)
 
     # player collision
-    hits = pygame.sprite.spritecollide(player, enemyGroup, False)
+    hits = pygame.sprite.spritecollide(player, enemyGroup, True)
     if hits:
+        print(hits)
+        print(type(hits))
+        print('ENEMY HITS PLAYER!')
         player.lives -= 1
         player.rect.x = 0
         player.rect.y = 300
