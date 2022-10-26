@@ -1,6 +1,8 @@
+from email.headerregistry import Group
 import pygame
 from pygame.locals import *
 from pygame.sprite import Sprite
+
 
 class Bullet(Sprite):
     def __init__(self, x, y):
@@ -19,6 +21,17 @@ class Bullet(Sprite):
     def update(self, screen):
         self.move()
         screen.blit(self.image, self.rect)
-        
-        
-    
+
+
+class BulletGroup(Group):
+    def __init__(self):
+        super().__init__()
+        bullet = bullet
+
+    def move(self):
+        for bullet in self.sprites():
+            bullet.move()
+
+    def update(self, screen):
+        for bullet in self.sprites():
+            bullet.update(screen)

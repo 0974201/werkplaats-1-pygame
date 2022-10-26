@@ -7,6 +7,7 @@ from lib.player import Player
 from lib.enemy import Enemy
 from lib.enemy import EnemyGroup
 from lib.bullet import Bullet
+from lib.bullet import BulletGroup
 
 # const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
@@ -72,6 +73,7 @@ score_value = 0
 
 # bullet object
 bullet = Bullet(0, 0)
+bulletgroup = BulletGroup
 
 
 def show_score(x, y):
