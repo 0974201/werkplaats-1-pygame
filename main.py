@@ -1,6 +1,5 @@
 from re import T
-import pygame
-import random
+import pygame, random, pyautogui
 from pygame import mixer
 import lib.button as button
 from lib.player import Player
@@ -45,6 +44,7 @@ textY = 10
 # Load button text
 title_text = font.render("Space Warriors", True, (125, 38, 205))
 start_text = font.render("Start", True, (0, 255, 0))
+choose_diff_text = font.render("Difficulity", True, (0, 255, 0))
 exit_text = font.render("Exit", True, (255, 0, 0))
 tutorial_text = font.render("Tutorial", True, (250, 250, 10))
 game_over_text = font.render("Game over", True, (200, 200, 200))
@@ -65,8 +65,10 @@ game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
+diff_button = button.Button(100, 350, choose_diff_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
 tutorial_button = button.Button(300, 450, tutorial_text, 1.0)
+
 # score
 hs_list = []
 score_value = 0
@@ -145,10 +147,25 @@ while start:
         start = False
     if exit_button.draw(screen):
         start = False
+    if diff_button.draw(screen):
+        diff_choice_user = pyautogui.confirm('Please choose your difficulty of the game', buttons=['Easy', 'Medium', 'Hard'])
+
+        if diff_choice_user == 'Easy':
+            player.lives = 5 
+
+        if diff_choice_user == 'Medium':
+            player.lives = 3 
+
+        if diff_choice_user == 'Hard':
+            player.lives = 1 
+
+        print(player.lives)
+        print(type(player.lives))
 
     for event in pygame.event.get():
         if event.type == tutorial_button:
             screen.blit(TUTORIAL_IMG, (0, 0))
+
     # Quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
