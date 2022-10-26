@@ -161,7 +161,7 @@ while start:
 
         if diff_choice_user == 'Easy':
             player.lives = 5 
-
+            enemy.speed 
         if diff_choice_user == 'Medium':
             player.lives = 3 
 
