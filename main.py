@@ -68,9 +68,8 @@ game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 
 # Create buttons
 start_button = button.Button(200, 250, start_text, 1.0)
-diff_button = button.Button(100, 350, choose_diff_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
-tutorial_button = button.Button(300, 450, tutorial_text, 1.0)
+tutorial_button = button.Button(300, 350, tutorial_text, 1.0)
 
 # score
 hs_list = []
@@ -141,24 +140,29 @@ while start:
                 pygame.display.update()
 
     if start_button.draw(screen):
-        running = True
-        start = False
+            diff_choice_user = pyautogui.confirm('Please choose your difficulty of the game', buttons=['Easy', 'Medium', 'Hard'])
+
+            if diff_choice_user == 'Easy':
+                player.lives = 5 
+                #enemy.speed 
+                running = True
+                start = False
+
+            if diff_choice_user == 'Medium':
+                player.lives = 3
+                running = True
+                start = False
+
+            if diff_choice_user == 'Hard':
+                player.lives = 1 
+                running = True
+                start = False
+
+            print(player.lives)
+
     if exit_button.draw(screen):
         start = False
-    if diff_button.draw(screen):
-        diff_choice_user = pyautogui.confirm('Please choose your difficulty of the game', buttons=['Easy', 'Medium', 'Hard'])
-
-        if diff_choice_user == 'Easy':
-            player.lives = 5 
-            enemy.speed 
-        if diff_choice_user == 'Medium':
-            player.lives = 3 
-
-        if diff_choice_user == 'Hard':
-            player.lives = 1 
-
-        print(player.lives)
-
+    
     for event in pygame.event.get():
         if event.type == tutorial_button:
             screen.blit(TUTORIAL_IMG, (0, 0))
@@ -249,7 +253,7 @@ while running:
             bullet_group.empty()
             player_list.empty()
             game_over()
-            write_score()
+            #write_score()
             running = False
 
     player_list.draw(screen)  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
