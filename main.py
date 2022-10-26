@@ -106,10 +106,9 @@ def show_lives(x, y):
 
 def game_over():
     screen.blit(game_over_text, (300, 250))
-    highscore = font.render(
-        "Your final score = " + str(score_value), True, (255, 255, 0)
-    )
+    highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
+    write_score()
     screen.blit(highscore, (180, 300))
     screen.blit(highest_hs, (85, 400))
     pygame.display.update()
@@ -162,7 +161,6 @@ while start:
             player.lives = 1 
 
         print(player.lives)
-        print(type(player.lives))
 
     for event in pygame.event.get():
         if event.type == tutorial_button:
@@ -180,9 +178,7 @@ while start:
 while running:
 
     # achtergrond afbeelding
-    screen.blit(
-        BACKGROUND_IMG, (background_animation, 0)
-    )  # nieuwe achtergrond toegevoegd
+    screen.blit(BACKGROUND_IMG, (background_animation, 0))  # nieuwe achtergrond toegevoegd
     screen.blit(BACKGROUND_IMG, (SCREEN_WIDTH + background_animation, 0))
     if background_animation == -SCREEN_WIDTH:
         screen.blit(BACKGROUND_IMG, (SCREEN_WIDTH + background_animation, 0))
@@ -246,8 +242,6 @@ while running:
     # player collision
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
-        print(hits)
-        print(type(hits))
         print("ENEMY HITS PLAYER!")
         player.lives -= 1
         player.rect.x = 0
@@ -255,16 +249,14 @@ while running:
         game_sound.play()
         if player.lives == 0:
             enemyGroup.empty()
+            bullet_group.empty()
             player_list.empty()
             game_over()
-            write_score()
+            #write_score()
             running = False
 
-    player_list.draw(
-        screen
-    )  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
-    # was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
-    player_list.update()
+    player_list.draw(screen)  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
+    player_list.update()# was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
     show_score(textX, textY)  # laat de score zien
     show_lives(textX, textY + 50)  # laat de lives zien
     pygame.display.update()  # update het scherm
