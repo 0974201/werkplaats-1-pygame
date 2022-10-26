@@ -1,13 +1,11 @@
 from re import T
 import pygame, random, pyautogui
-from pygame import mixer
-from pygame import MOUSEBUTTONDOWN, mixer
+from pygame import *
 import lib.button as button
 from lib.player import Player
 from lib.enemy import Enemy
 from lib.enemy import EnemyGroup
 from lib.bullet import Bullet
-from lib.bullet import BulletGroup
 
 # const var, hier zitten wij verder niet meer aan.
 SCREEN_WIDTH = 800
@@ -32,6 +30,10 @@ player = Player()  # hier roepen wij player aan.
 player.rect.y = 300  # wordt op 300px gespawned
 player_list = pygame.sprite.Group()  # hier gaat de sprite voor player in
 player_list.add(player)  # en is nu toegevoegd.
+
+# bullet object
+bullet = Bullet(0, 0)
+bullet_group = pygame.sprite.Group()
 
 # Enemy
 enemy = Enemy(0, 0, 0)
@@ -73,11 +75,6 @@ tutorial_button = button.Button(300, 450, tutorial_text, 1.0)
 # score
 hs_list = []
 score_value = 0
-
-# bullet object
-bullet = Bullet(0, 0)
-bulletgroup = BulletGroup
-
 
 def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
