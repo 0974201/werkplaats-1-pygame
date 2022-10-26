@@ -100,6 +100,7 @@ def show_lives(x, y):
 
 
 def game_over():
+    screen.blit(START_IMG, (0, 0))
     screen.blit(game_over_text, (280, 150))
     highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
@@ -107,7 +108,7 @@ def game_over():
     screen.blit(highscore, (180, 250))
     screen.blit(highest_hs, (90, 300))
     pygame.display.update()
-    pygame.time.delay(3000)
+    pygame.time.delay(3150)
 
 
 # start loop
