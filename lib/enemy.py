@@ -12,15 +12,15 @@ class Enemy(Sprite):
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
-
+# heb hier de speed aangepast van de enemies, nu moet het goed zijn, zoniet originele waarden waren 4 & 1
     def move(self):
         self.rect.y += self.speed
         if self.rect.y <= 0:
             self.speed = random.randint(self.speed + 5, self.speed + 15)
-            self.rect.x += random.randint(-40, -20)
+            self.rect.x += random.randint(-15, -5)
         elif self.rect.y >= 570:
-            self.speed = random.randint(-30, -10)
-            self.rect.x += random.randint(-40, -20)
+            self.speed = random.randint(-10, -5)
+            self.rect.x += random.randint(-15, -5)
 
     def update(self, screen):
         self.move()
