@@ -82,12 +82,8 @@ def show_score(x, y):
 
 
 def write_score():  # zou dit bij assets kunnen????? who knows!!!
-    with open(
-        "score.txt", "a"
-    ) as write_hs:  # maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
-        write_hs.write(
-            f"{str(score_value)}\n"
-        )  # schrijft naar bestand die hierboven is aangemaakt
+    with open("score.txt", "a") as write_hs:  # maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
+        write_hs.write(f"{str(score_value)}\n")  # schrijft naar bestand die hierboven is aangemaakt
         # with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
 
 
