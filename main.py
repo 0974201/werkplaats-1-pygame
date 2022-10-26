@@ -1,6 +1,7 @@
 from re import T
 import pygame, random, pyautogui
 from pygame import mixer
+from pygame import MOUSEBUTTONDOWN, mixer
 import lib.button as button
 from lib.player import Player
 from lib.enemy import Enemy
@@ -33,7 +34,7 @@ player_list = pygame.sprite.Group()  # hier gaat de sprite voor player in
 player_list.add(player)  # en is nu toegevoegd.
 
 # Enemy
-enemy = Enemy(0, 0, 15)
+enemy = Enemy(0, 0, 0)
 enemyGroup = EnemyGroup(10)
 
 # Temp text
@@ -58,8 +59,8 @@ icon = pygame.image.load("assets/images/ship.png")
 pygame.display.set_icon(icon)
 
 # sounds
-# mixer.music.load("assets/sounds/Floating In Nothingness.wav")
-# mixer.music.play(-1)
+mixer.music.load("assets/sounds/Floating In Nothingness.wav")
+mixer.music.play(-1)
 hit_sound = pygame.mixer.Sound("assets/sounds/HIT.wav")
 game_sound = pygame.mixer.Sound("assets/sounds/Shoot_1.wav")
 
@@ -115,8 +116,7 @@ def game_over():
     highscore = font.render(
         "Your final score = " + str(score_value), True, (255, 255, 0)
     )
-    highest_hs = font.render("All time highscore = " +
-                             get_hs(), True, (255, 255, 0))
+    highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
     screen.blit(highscore, (180, 300))
     screen.blit(highest_hs, (85, 400))
     pygame.display.update()
@@ -140,8 +140,17 @@ while start:
     if title.draw(screen):
         start = True
     if tutorial_button.draw(screen):
-        start = True
-        screen.blit(TUTORIAL_IMG, (0, 0))
+        while tutorial_button:
+            if MOUSEBUTTONDOWN:
+                screen.blit(TUTORIAL_IMG, (0, 0))
+                back_text = font.render("Back", True, (250, 250, 10))
+                back_button = button.Button(300, 450, back_text, 1.0)
+                if back_button.draw(screen):
+                    running = True
+                    start = False
+
+                pygame.display.update()
+
     if start_button.draw(screen):
         running = True
         start = False
@@ -226,7 +235,7 @@ while running:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 player.moveY(0)
                 print("key released")
-        # bullet movement stoppen
+            # bullet movement stoppen
             if event.key == pygame.K_SPACE:
                 print("spacebar released")
 
@@ -242,11 +251,11 @@ while running:
         enemyGroup.add(enemy)
 
     # player collision
-    hits = pygame.sprite.spritecollide(player, enemyGroup, True)
+    hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
         print(hits)
         print(type(hits))
-        print('ENEMY HITS PLAYER!')
+        print("ENEMY HITS PLAYER!")
         player.lives -= 1
         player.rect.x = 0
         player.rect.y = 300
