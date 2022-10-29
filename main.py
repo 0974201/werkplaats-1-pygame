@@ -137,10 +137,33 @@ while start:
                 screen.blit(TUTORIAL_IMG, (0, 0))
                 back_text = font.render("Back", True, (250, 250, 10))
                 back_button = button.Button(300, 450, back_text, 1.0)
+                instruction_text = font.render(
+                    "Het spel is een side shooter game, die je bestuurd",
+                    True,
+                    (0, 204, 0),
+                )
+                instruction_button = button.Button(0, 0, instruction_text, 0.4)
+                instruction_text2 = font.render(
+                    "met de arrow keys up en down om de schip op en neer te laten",
+                    True,
+                    (0, 204, 0),
+                )
+                instruction_button2 = button.Button(0, 50, instruction_text2, 0.4)
+                instruction_text3 = font.render(
+                    "bewegen en de space bar die je gebruikt om de bullet af te kunnen schieten.",
+                    True,
+                    (0, 204, 0),
+                )
+                instruction_button3 = button.Button(0, 100, instruction_text3, 0.4)
                 if back_button.draw(screen):
                     start = True
                     break
-
+                if instruction_button.draw(screen):
+                    start = True
+                if instruction_button2.draw(screen):
+                    start = True
+                if instruction_button3.draw(screen):
+                    start = True
                 # Quit game
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
