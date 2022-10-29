@@ -1,6 +1,7 @@
 import pygame
 
 
+# Initialize class
 class Button:
     def __init__(self, x, y, image, scale):
         width = image.get_width()
@@ -12,6 +13,7 @@ class Button:
         self.rect.topleft = (x, y)
         self.clicked = False
 
+    # Draw button
     def draw(self, window):
         action = False
 
