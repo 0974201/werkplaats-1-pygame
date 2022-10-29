@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from pygame.sprite import Sprite
 
+
 class Bullet(Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -19,6 +20,3 @@ class Bullet(Sprite):
     def update(self, screen):
         self.move()
         screen.blit(self.image, self.rect)
-        
-        
-    
