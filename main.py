@@ -1,4 +1,4 @@
-import pygame, random, pyautogui
+import pygame, random
 from pygame import *
 import lib.button as button
 from lib.player import Player
@@ -98,7 +98,6 @@ def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
 
-
 def game_over():
     screen.blit(START_IMG, (0, 0))
     screen.blit(game_over_text, (280, 150))
@@ -140,25 +139,8 @@ while start:
                 pygame.display.update()
 
     if start_button.draw(screen):
-            diff_choice_user = pyautogui.confirm('Please choose your difficulty of the game', buttons=['Easy', 'Medium', 'Hard'])
-
-            if diff_choice_user == 'Easy':
-                player.lives = 5 
-                #enemy.speed 
                 running = True
                 start = False
-
-            if diff_choice_user == 'Medium':
-                player.lives = 3
-                running = True
-                start = False
-
-            if diff_choice_user == 'Hard':
-                player.lives = 1 
-                running = True
-                start = False
-
-            print(player.lives)
 
     if exit_button.draw(screen):
         start = False
