@@ -74,34 +74,45 @@ tutorial_button = button.Button(300, 350, tutorial_text, 1.0)
 hs_list = []
 score_value = 0
 
+
 def show_score(x, y):
     score = font.render("Score = " + str(score_value), True, (255, 255, 0))
     screen.blit(score, (x, y))
 
-def write_score(): #zou dit bij assets kunnen????? who knows!!!
-    with open("score.txt", "a") as write_hs: #maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
-        write_hs.write(f"{str(score_value)}\n") #schrijft naar bestand die hierboven is aangemaakt
-        #with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
+
+def write_score():  # zou dit bij assets kunnen????? who knows!!!
+    with open(
+        "score.txt", "a"
+    ) as write_hs:  # maakt file aan in map waar game zit, "a" geeft aan dat het een file moet creëren en daarna mag aanpassen
+        write_hs.write(
+            f"{str(score_value)}\n"
+        )  # schrijft naar bestand die hierboven is aangemaakt
+        # with sluit de file automatisch, als ik mij niet vergis, dus close() is niet meer nodig
+
 
 def get_hs():
     hs = ""
-    with open("score.txt", 'r') as score:
-        score_list = score.readlines() #leest alle regels in txt bestand
+    with open("score.txt", "r") as score:
+        score_list = score.readlines()  # leest alle regels in txt bestand
 
         for score in reversed(score_list):
-            hs_list.append(int(score)) #in list zetten
+            hs_list.append(int(score))  # in list zetten
 
-    hs = str(max(hs_list)) #casten naar string
+    hs = str(max(hs_list))  # casten naar string
     return hs
+
 
 def show_lives(x, y):
     lives = font.render("Lives = " + str(player.lives), True, (255, 255, 0))
     screen.blit(lives, (x, y))
 
+
 def game_over():
     screen.blit(START_IMG, (0, 0))
     screen.blit(game_over_text, (280, 150))
-    highscore = font.render("Your final score = " + str(score_value), True, (255, 255, 0))
+    highscore = font.render(
+        "Your final score = " + str(score_value), True, (255, 255, 0)
+    )
     highest_hs = font.render("All time highscore = " + get_hs(), True, (255, 255, 0))
     write_score()
     screen.blit(highscore, (180, 250))
@@ -133,18 +144,23 @@ while start:
                 back_text = font.render("Back", True, (250, 250, 10))
                 back_button = button.Button(300, 450, back_text, 1.0)
                 if back_button.draw(screen):
-                    running = True
-                    start = False
+                    start = True
+                    break
+
+                # Quit game
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        tutorial_button = False
 
                 pygame.display.update()
 
     if start_button.draw(screen):
-                running = True
-                start = False
+        running = True
+        start = False
 
     if exit_button.draw(screen):
         start = False
-    
+
     for event in pygame.event.get():
         if event.type == tutorial_button:
             screen.blit(TUTORIAL_IMG, (0, 0))
@@ -161,7 +177,9 @@ while start:
 while running:
 
     # achtergrond afbeelding
-    screen.blit(BACKGROUND_IMG, (background_animation, 0))  # nieuwe achtergrond toegevoegd
+    screen.blit(
+        BACKGROUND_IMG, (background_animation, 0)
+    )  # nieuwe achtergrond toegevoegd
     screen.blit(BACKGROUND_IMG, (SCREEN_WIDTH + background_animation, 0))
     if background_animation == -SCREEN_WIDTH:
         screen.blit(BACKGROUND_IMG, (SCREEN_WIDTH + background_animation, 0))
@@ -237,8 +255,10 @@ while running:
             game_over()
             running = False
 
-    player_list.draw(screen)  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
-    player_list.update()# was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
+    player_list.draw(
+        screen
+    )  # alleen is ie niet op t scherm, maar hij pakt de veranderde kleurwaardes van background ook niet. wat.
+    player_list.update()  # was dit vergeten toe te voegen, nu kunnen we de player zien bewegen op het scherm
     show_score(textX, textY)  # laat de score zien
     show_lives(textX, textY + 50)  # laat de lives zien
     pygame.display.update()  # update het scherm
