@@ -136,10 +136,20 @@ while start:
         while tutorial_button:
             if MOUSEBUTTONDOWN:
                 screen.blit(TUTORIAL_IMG, (0, 0))
-                tutorial_image = pygame.image.load("assets/images/key buttons.png")
-
-                tutorial_image = pygame.transform.scale(tutorial_image, (200, 200))
-                screen.blit(tutorial_image, (300, 300))
+                tutorial_image_keyupdown = pygame.image.load(
+                    "assets/images/key buttons.png"
+                )
+                tutorial_image_keyupdown = pygame.transform.scale(
+                    tutorial_image_keyupdown, (200, 200)
+                )
+                screen.blit(tutorial_image_keyupdown, (300, 300))
+                tutorial_image_spacebar = pygame.image.load(
+                    "assets/images/Space bar.png"
+                )
+                tutorial_image_spacebar = pygame.transform.scale(
+                    tutorial_image_spacebar, (300, 70)
+                )
+                screen.blit(tutorial_image_spacebar, (250, 500))
                 back_text = font.render("Back", True, (250, 250, 10))
                 back_button = button.Button(20, 500, back_text, 1.0)
                 instruction_text = font.render(
