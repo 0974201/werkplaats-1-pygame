@@ -70,6 +70,7 @@ start_button = button.Button(200, 250, start_text, 1.0)
 exit_button = button.Button(500, 250, exit_text, 1.0)
 tutorial_button = button.Button(300, 350, tutorial_text, 1.0)
 
+
 # Score
 hs_list = []
 score_value = 0
@@ -135,20 +136,26 @@ while start:
         while tutorial_button:
             if MOUSEBUTTONDOWN:
                 screen.blit(TUTORIAL_IMG, (0, 0))
+                tutorial_image = pygame.image.load("assets/images/key buttons.png")
+
+                tutorial_image = pygame.transform.scale(tutorial_image, (200, 200))
+                screen.blit(tutorial_image, (300, 300))
                 back_text = font.render("Back", True, (250, 250, 10))
-                back_button = button.Button(300, 450, back_text, 1.0)
+                back_button = button.Button(20, 500, back_text, 1.0)
                 instruction_text = font.render(
                     "Het spel is een side shooter game, die je bestuurd",
                     True,
                     (0, 204, 0),
                 )
                 instruction_button = button.Button(0, 0, instruction_text, 0.4)
+
                 instruction_text2 = font.render(
                     "met de arrow keys up en down om de schip op en neer te laten",
                     True,
                     (0, 204, 0),
                 )
                 instruction_button2 = button.Button(0, 50, instruction_text2, 0.4)
+
                 instruction_text3 = font.render(
                     "bewegen en de space bar die je gebruikt om de bullet af te kunnen schieten.",
                     True,
