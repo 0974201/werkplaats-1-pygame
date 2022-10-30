@@ -234,24 +234,24 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 player.moveY(-1)
-                print("up")
+            #    print("up")
             if event.key == pygame.K_DOWN:
                 player.moveY(1)
-                print("down")
+            #    print("down")
 
             if event.key == pygame.K_SPACE:
                 game_sound.play()
                 bullet_group.add(player.shoot())
-                print("space")
+            #    print("space")
 
         # player movement stoppen
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 player.moveY(0)
-                print("key released")
+                #print("key released")
             # bullet movement stoppen
-            if event.key == pygame.K_SPACE:
-                print("spacebar released")
+            #if event.key == pygame.K_SPACE:
+            #    print("spacebar released")
 
     # bullet collision
     for bullet in bullet_group:
@@ -267,7 +267,7 @@ while running:
     # player collision
     hits = pygame.sprite.spritecollide(player, enemyGroup, False)
     if hits:
-        print("ENEMY HITS PLAYER!")
+        #print("ENEMY HITS PLAYER!")
         player.lives -= 1
         player.rect.x = 0
         player.rect.y = 300
